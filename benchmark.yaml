@@ -1,0 +1,41 @@
+benchmark_id: quaylink-payments
+corpus_version: "0.1.0"
+industry: fintech
+sub_industry: payments
+frameworks: [PCI-DSS-4.0, SOC-2]
+
+findings:
+  sast:
+    - { id: QUAY-SAST-001, cwe: CWE-89,   severity: high,     file: src/routes/intents.js,         line: 22, title: "SQL injection (string concat)" }
+    - { id: QUAY-SAST-002, cwe: CWE-78,   severity: high,     file: src/services/reportRunner.js,  line: 12, title: "Command injection (exec)" }
+    - { id: QUAY-SAST-003, cwe: CWE-798,  severity: critical, file: src/config.js,                 line: 7,  title: "Hardcoded HMAC/DB secret" }
+    - { id: QUAY-SAST-004, cwe: CWE-327,  severity: medium,   file: src/services/crypto.js,        line: 9,  title: "DES/MD5 for token signing" }
+    - { id: QUAY-SAST-005, cwe: CWE-1321, severity: high,     file: src/services/merge.js,         line: 11, title: "Prototype pollution (recursive merge)" }
+    - { id: QUAY-SAST-006, cwe: CWE-347,  severity: high,     file: src/middleware/auth.js,        line: 18, title: "JWT alg=none accepted" }
+    - { id: QUAY-SAST-007, cwe: CWE-918,  severity: high,     file: src/routes/webhooks.js,        line: 16, title: "SSRF via axios.get on user URL" }
+    - { id: QUAY-SAST-008, cwe: CWE-601,  severity: medium,   file: src/routes/intents.js,         line: 41, title: "Open redirect on ?next=" }
+    - { id: QUAY-SAST-009, cwe: CWE-1333, severity: medium,   file: src/services/regex.js,         line: 7,  title: "ReDoS regex" }
+    - { id: QUAY-SAST-010, cwe: CWE-200,  severity: low,      file: src/middleware/error.js,       line: 9,  title: "Stack trace leakage" }
+    - { id: QUAY-SAST-011, cwe: CWE-352,  severity: high,     file: src/routes/admin.js,           line: 12, title: "Missing CSRF protection" }
+
+  iac:
+    - { id: QUAY-IAC-001, class: kms-wildcard,        severity: high,   file: infra/terraform/kms.tf,        line: 11 }
+    - { id: QUAY-IAC-002, class: rds-no-iam-auth,     severity: high,   file: infra/terraform/rds.tf,        line: 19 }
+    - { id: QUAY-IAC-003, class: alb-http-listener,   severity: medium, file: infra/terraform/alb.tf,        line: 10 }
+    - { id: QUAY-IAC-004, class: iam-wildcard,        severity: high,   file: infra/terraform/iam.tf,        line: 8  }
+    - { id: QUAY-IAC-005, class: sg-open-db-port,     severity: high,   file: infra/terraform/main.tf,       line: 28 }
+    - { id: QUAY-IAC-006, class: container-root-latest, severity: medium, file: Dockerfile,                  line: 1  }
+    - { id: QUAY-IAC-007, class: k8s-host-network,    severity: high,   file: infra/k8s/deployment.yaml,     line: 25 }
+
+  sca:
+    - { id: QUAY-SCA-001, package: lodash,       version: "4.17.15", advisory: "CVE-2020-8203" }
+    - { id: QUAY-SCA-002, package: axios,        version: "0.21.0",  advisory: "CVE-2020-28168, CVE-2021-3749" }
+    - { id: QUAY-SCA-003, package: jsonwebtoken, version: "8.5.1",   advisory: "CVE-2022-23529, CVE-2022-23541" }
+    - { id: QUAY-SCA-004, package: marked,       version: "1.1.1",   advisory: "CVE-2022-21680" }
+    - { id: QUAY-SCA-005, package: minimist,     version: "1.2.0",   advisory: "CVE-2021-44906" }
+
+  pipeline:
+    - { id: QUAY-CI-001, class: hardcoded-secret,    severity: critical, file: .github/workflows/ci.yml, line: 17 }
+    - { id: QUAY-CI-002, class: action-old-version,  severity: high,     file: .github/workflows/ci.yml, line: 22 }
+    - { id: QUAY-CI-003, class: missing-permissions, severity: medium,   file: .github/workflows/ci.yml, line: 1  }
+    - { id: QUAY-CI-004, class: script-injection,    severity: high,     file: .github/workflows/ci.yml, line: 31 }

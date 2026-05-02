@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quaylink-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: quaylink-api }
+  template:
+    metadata:
+      labels: { app: quaylink-api }
+    spec:
+      # QUAY-IAC-007: hostNetwork=true exposes pod to node network namespace.
+      hostNetwork: true
+      containers:
+        - name: api
+          image: quaylink/api:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: STRIPE_API_KEY
+              value: "sk_live_BENCH_PLACEHOLDER_NOT_REAL"
+          # No securityContext.runAsNonRoot, no resources.limits — both intentional.

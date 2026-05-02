@@ -1,0 +1,31 @@
+# QUAY-CI-003: no top-level permissions block.
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # QUAY-CI-001: live Stripe key hardcoded in workflow env.
+      STRIPE_API_KEY: sk_live_BENCH_PLACEHOLDER_NOT_REAL
+      DATABASE_URL: postgres://quaylink:hunter2@quaylink-db.example:5432/quaylink
+    steps:
+      # QUAY-CI-002: very old action version, known issues.
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - run: npm ci
+      - run: npm test
+
+      # QUAY-CI-004: ${{ github.event.head_commit.message }} interpolated unquoted into shell.
+      - name: Tag build
+        run: |
+          echo "Building commit: ${{ github.event.head_commit.message }}"
+          ./scripts/tag-release.sh ${{ github.event.head_commit.message }}
