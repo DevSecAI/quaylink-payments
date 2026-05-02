@@ -2,7 +2,7 @@
 
 > ⚠️ **ARKO Demo Application — contains intentional vulnerabilities. Do not deploy.**
 
-Card-not-present payment intent service for the (fictional) **Quaylink** payment facilitator. Part of the [ARKO Coverage Demos](https://github.com/DevSecAI/arko-benchmarks) suite.
+Card-not-present payment intent service for the (fictional) **Quaylink** payment facilitator. Part of the [ARKO Coverage Demos](https://github.com/DevSecAI/arko-demos) suite.
 
 Stack: Node 20 · Express 4 · Postgres · AWS (Terraform) · Kubernetes.
 
