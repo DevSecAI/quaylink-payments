@@ -1,8 +1,8 @@
 # Quaylink Payments
 
-> ⚠️ **ARKO Benchmark Application — contains intentional vulnerabilities. Do not deploy.**
+> ⚠️ **ARKO Demo Application — contains intentional vulnerabilities. Do not deploy.**
 
-Card-not-present payment intent service for the (fictional) **Quaylink** payment facilitator. Part of the [ARKO Coverage Benchmarks](https://github.com/DevSecAI/arko-benchmarks) suite.
+Card-not-present payment intent service for the (fictional) **Quaylink** payment facilitator. Part of the [ARKO Coverage Demos](https://github.com/DevSecAI/arko-benchmarks) suite.
 
 Stack: Node 20 · Express 4 · Postgres · AWS (Terraform) · Kubernetes.
 
@@ -20,7 +20,7 @@ Stack: Node 20 · Express 4 · Postgres · AWS (Terraform) · Kubernetes.
 - **5 vulnerable npm dependencies** — historical CVEs across `lodash`, `axios`, `jsonwebtoken`, `marked`, `minimist`.
 - **4 seeded GitHub Actions misconfigurations**.
 
-See [`BENCHMARK.md`](./BENCHMARK.md) for the full inventory.
+See [`DEMO.md`](./DEMO.md) for the full inventory.
 
 ## Regulatory frameworks exercised
 
@@ -30,6 +30,6 @@ See [`BENCHMARK.md`](./BENCHMARK.md) for the full inventory.
 ## Running a scan
 
 ```bash
-arko scan --tenant=benchmarks --report=json > report.json
-arko benchmark verify --expected=benchmark.yaml --actual=report.json
+arko scan --tenant=demos --report=json > report.json
+arko demo verify --expected=demo.yaml --actual=report.json
 ```

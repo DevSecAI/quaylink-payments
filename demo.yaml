@@ -1,4 +1,4 @@
-benchmark_id: quaylink-payments
+demo_id: quaylink-payments
 corpus_version: "0.1.0"
 industry: fintech
 sub_industry: payments

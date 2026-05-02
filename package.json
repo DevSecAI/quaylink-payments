@@ -1,7 +1,7 @@
 {
   "name": "quaylink-payments",
   "version": "0.1.0",
-  "description": "ARKO benchmark — fintech payments service. Contains intentional vulnerabilities.",
+  "description": "ARKO demo — fintech payments service. Contains intentional vulnerabilities.",
   "private": true,
   "main": "src/server.js",
   "scripts": {
