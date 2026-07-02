@@ -9,14 +9,14 @@ router.get("/", async (req, res, next) => {
   try {
     const merchantId = req.query.merchant_id;
     const status = req.query.status;
-    // QUAY-SAST-001: query is concatenated from request input.
+    // QUAY-SAST-001: Fixed - using parameterized query with $1, $2 placeholders.
     const sql = `
       SELECT id, merchant_id, amount, currency, status, created_at
       FROM payment_intents
-      WHERE merchant_id = '${merchantId}'
-        AND status = '${status}'
+      WHERE merchant_id = $1
+        AND status = $2
       ORDER BY created_at DESC LIMIT 100`;
-    const { rows } = await pool.query(sql);
+    const { rows } = await pool.query(sql, [merchantId, status]);
     res.json({ intents: rows });
   } catch (err) {
     next(err);
